@@ -1,9 +1,6 @@
 package pl.sonmiike.parliamentclient.apiclient;
 
-import pl.sonmiike.parliamentclient.contract.ParliamentClubDTO;
-import pl.sonmiike.parliamentclient.contract.ParliamentMemberDTO;
-import pl.sonmiike.parliamentclient.contract.ParliamentVotingsDTO;
-import pl.sonmiike.parliamentclient.contract.VotesDTO;
+import pl.sonmiike.parliamentclient.contract.*;
 
 import java.util.List;
 
@@ -14,5 +11,6 @@ public interface IAskApiClient {
     List<ParliamentVotingsDTO> getVotings();
 
     List<VotesDTO> getMPVotings(long mpId);
+
 
 }

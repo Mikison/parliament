@@ -6,10 +6,7 @@ import pl.sonmiike.parliamentclient.apiclient.IAskApiClient;
 import pl.sonmiike.parliamentclient.contract.ParliamentClubDTO;
 import pl.sonmiike.parliamentclient.contract.ParliamentMemberDTO;
 import pl.sonmiike.parliamentclient.contract.ParliamentVotingsDTO;
-import pl.sonmiike.parliamentdata.model.ParliamentMembers;
-import pl.sonmiike.parliamentdata.model.Votes;
-import pl.sonmiike.parliamentdata.model.Voting;
-import pl.sonmiike.parliamentdata.model.VotingOptions;
+import pl.sonmiike.parliamentdata.model.*;
 import pl.sonmiike.parliamentdata.repositories.IDatabase;
 import pl.sonmiike.parliamentlogging.LogClient;
 import pl.sonmiike.parliamentlogging.contract.LogDTO;
@@ -148,10 +145,7 @@ public class Updater implements IUpdate {
 
     }
 
-    public void testUpdateParliamentMembersVotings() {
-        List<Voting> votings = database.getVotings().findAll();
-//        votings.forEach();
-    }
+
 
     public List<Votes> votes(long id) {
         return database.getMPVotings().findAllByVotingId(id);

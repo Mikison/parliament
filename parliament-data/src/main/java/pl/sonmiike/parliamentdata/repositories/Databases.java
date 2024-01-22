@@ -19,4 +19,5 @@ public class Databases implements IDatabase {
     public VotesRepository getMPVotings() {
         return mpVotings;
     }
+
 }

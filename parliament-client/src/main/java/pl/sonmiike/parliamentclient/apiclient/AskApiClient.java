@@ -3,6 +3,7 @@ package pl.sonmiike.parliamentclient.apiclient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import pl.sonmiike.parliamentclient.contract.*;
@@ -83,12 +84,7 @@ public class AskApiClient implements IAskApiClient {
         return votesDTOList.isEmpty() ? null : votesDTOList;
     }
 
-    public void getMPVotingsV2(int sitting, int votingNumber) {
 
-        URI uri = buildUri("sejm", "term10", "votings", String.valueOf(sitting), String.valueOf(votingNumber));
-
-
-    }
 
     public void getParliamentTerm10Dates() {
         if (!parliamentTerm10Dates.isEmpty()) {

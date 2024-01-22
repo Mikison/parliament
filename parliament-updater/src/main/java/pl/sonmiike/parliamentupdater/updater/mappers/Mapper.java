@@ -3,10 +3,7 @@ package pl.sonmiike.parliamentupdater.updater.mappers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.sonmiike.parliamentclient.contract.ParliamentClubDTO;
-import pl.sonmiike.parliamentclient.contract.ParliamentMemberDTO;
-import pl.sonmiike.parliamentclient.contract.ParliamentVotingsDTO;
-import pl.sonmiike.parliamentclient.contract.VotesDTO;
+import pl.sonmiike.parliamentclient.contract.*;
 import pl.sonmiike.parliamentclient.contract.side.VotingOptionsDTO;
 import pl.sonmiike.parliamentdata.model.*;
 
@@ -20,6 +17,7 @@ public class Mapper implements IMap {
     private final IMapper<ParliamentVotingsDTO, Voting> votings;
     private final IMapper<VotingOptionsDTO, VotingOptions> votingOptions;
     private final IMapper<VotesDTO, Votes> votes;
+
 
     @Override
     public IMapper<ParliamentClubDTO, ParliamentClub> clubs() {
@@ -45,4 +43,6 @@ public class Mapper implements IMap {
     public IMapper<VotesDTO, Votes> votes() {
         return votes;
     }
+
+
 }
