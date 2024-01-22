@@ -1,0 +1,65 @@
+//
+//    @Override
+//    public void updateMPs() {
+////        askApiClient.getMPs().forEach();
+//    }
+//
+//    @Override
+//    public void updateClubs() {
+//        askApiClient.getClubs().forEach(this::saveClubs);
+//        log.atInfo().log("Clubs and MPs updated");
+//        updateVotings();
+//        log.atInfo().log("Votings updated");
+//        updateClubMembers();
+//        log.atInfo().log("Club members updated");
+//    }
+//
+//    @Override
+//    public void updateVotings() {
+//        if (database.getVotings().count() == askApiClient.getVotings().size()) return;
+//        askApiClient.getVotings().forEach(this::saveVoting);
+//    }
+//
+//    void saveClubs(ParliamentClubDTO dto) {
+//        var club = mapper.clubs().mapToEntity(dto);
+//        if (database.getClubs().findByName(club.getName()).isEmpty())  database.getClubs().save(club);
+//        askApiClient.getMPs().forEach(member -> {
+//            database.getClubs().findByName(club.getName()).ifPresent(c -> saveMPs(member, c));
+//        }
+//        );
+//    }
+//
+//    void saveMPs(ParliamentMemberDTO memberDto, ParliamentClub club) {
+//        var member = mapper.members().mapToEntity(memberDto);
+//        if (database.getMPs().findByFirstNameAndLastName(member.getFirstName(), member.getLastName()).isPresent()) return;
+//        if (member.getClub().equalsIgnoreCase(club.getNameId())) {
+//                member.setParliamentClub(club);
+//                database.getMPs().save(member);
+//        }
+//    }
+//
+//    void saveVoting(ParliamentVotingsDTO votingDto) {
+//        var voting = mapper.votings().mapToEntity(votingDto);
+//        List<VotingOptions> options = new ArrayList<>();
+//        if (votingDto.getVotingOptions().isPresent()) {
+//            List<VotingOptionsDTO> votingOptions = votingDto.getVotingOptions().get();
+//            votingOptions.forEach(votingOptionDto -> {
+//                var votingOption = mapper.votingOptions().mapToEntity(votingOptionDto);
+//                options.add(votingOption);
+//            });
+//            voting.setVotingOptions(options);
+//        }
+//        Voting id = database.getVotings().save(voting);
+//        log.atInfo().log(String.valueOf(id.getId()));
+//    }
+//
+//
+//    void updateClubMembers() {
+//        database.getClubs().findAll().forEach(
+//                club -> {
+//                    List<ParliamentMembers> members = database.getMPs().findAllByClub(club.getNameId());
+//                    club.setParliamentMembers(members);
+//                    database.getClubs().save(club);
+//                }
+//        );
+//    }
