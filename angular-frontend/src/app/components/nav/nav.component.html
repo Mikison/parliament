@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navigation Bar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <body class="bg-[#1D1D1D]">
+    <nav class="flex justify-between items-center px-10 py-4">
+      <div class="text-white">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Sejm_RP_logo_and_wordmark.png"
+          alt="Brand Logo"
+          class="h-[100px] w-[100px]"
+        />
+      </div>
+      <div class="flex gap-12">
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link"
+          >Home</a
+        >
+        <a
+          routerLink="/kluby"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link"
+          >Kluby</a
+        >
+        <a
+          routerLink="/poslowie"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link"
+          >Posłowie</a
+        >
+        <a
+          routerLink="/glosowania"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link"
+          >Głosowania</a
+        >
+        <a
+          routerLink="/logi"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-link"
+          >Logi</a
+        >
+      </div>
+    </nav>
+  </body>
+</html>

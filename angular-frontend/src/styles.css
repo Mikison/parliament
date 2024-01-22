@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav-link {
+  @apply text-white text-lg  py-3 px-6 rounded-lg hover:border-solid hover:bg-white hover:text-black;
+}
+
+.nav-link.active {
+  @apply border-white rounded-lg border-solid bg-white text-black;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
