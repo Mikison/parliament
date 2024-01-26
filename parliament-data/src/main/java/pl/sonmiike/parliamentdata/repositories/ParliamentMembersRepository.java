@@ -12,4 +12,6 @@ public interface ParliamentMembersRepository extends JpaRepository<ParliamentMem
     List<ParliamentMembers> findAllByClub(String club);
 
     Optional<ParliamentMembers> findByApiID(long apiID);
+
+    void deleteByApiID(long apiID);
 }

@@ -1,11 +1,9 @@
 package pl.sonmiike.parliamentwebapi.Services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.sonmiike.parliamentdata.model.Voting;
 import pl.sonmiike.parliamentdata.repositories.IDatabase;
-import pl.sonmiike.parliamentwebapi.Contract.MPDTO;
 import pl.sonmiike.parliamentwebapi.Contract.VotingsDTO;
 
 import java.util.List;
@@ -18,14 +16,14 @@ public class VotingService implements IVotingService {
     private final VotesService votes;
     @Override
     public List<VotingsDTO> getByPage(int size, int page) {
-        return database.getVotings().findAll(PageRequest.of(page, size)).stream().map(this::mapFromVoting).toList();
+        return database.getVotings().findAll().stream().map(this::mapFromVoting).toList();
     }
 
     @Override
     public VotingsDTO getById(long id) {
         var voting = database.getVotings().findById(id).orElse(null);
         if(voting==null) return null;
-        List<MPDTO> participants = votes.getVotingParticipants(voting.getDate());
+        var participants = votes.getVotingParticipants(voting.getDate());
 
         VotingsDTO mapped = mapFromVoting(voting);
         mapped.setParticipants(participants);

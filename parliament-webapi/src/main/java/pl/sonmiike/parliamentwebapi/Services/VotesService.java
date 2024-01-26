@@ -4,13 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.sonmiike.parliamentdata.model.Votes;
 import pl.sonmiike.parliamentdata.repositories.Databases;
-import pl.sonmiike.parliamentwebapi.Contract.MPDTO;
 import pl.sonmiike.parliamentwebapi.Contract.VotesDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static pl.sonmiike.parliamentwebapi.Services.MemberService.mapFromMP;
 
 @Service
 @RequiredArgsConstructor
@@ -23,14 +20,17 @@ public class VotesService implements IVotesService {
     }
 
     @Override
-    public List<MPDTO> getVotingParticipants(LocalDateTime dateTime) {
-        return databases.getMPVotings().findAllByDate(dateTime).stream().map(v->mapFromMP(v.getParliamentMember())).toList();
+    public List<VotesDTO> getVotingParticipants(LocalDateTime dateTime) {
+        var votings = databases.getMPVotings().findAllByDate(dateTime);
+        return votings.stream().map(this::mapFromVotes).toList();
     }
 
     public  VotesDTO mapFromVotes(Votes votes) {
         VotesDTO votesDTO = new VotesDTO();
         votesDTO.setVotingId(votes.getVoting().getId());
         votesDTO.setVote(votes.getVote());
+        votesDTO.setFirstLastName(votes.getParliamentMember().getFirstLastName());
+        votesDTO.setClub(votes.getParliamentMember().getParliamentClub().getNameId());
         votesDTO.setApiId(votes.getParliamentMember().getApiID());
         votesDTO.setVoteTitle(votes.getVoteTitle());
         votesDTO.setDate(votes.getDate());

@@ -1,7 +1,6 @@
 package pl.sonmiike.parliamentwebapi.Services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.sonmiike.parliamentdata.model.ParliamentMembers;
 import pl.sonmiike.parliamentdata.repositories.Databases;
@@ -19,8 +18,8 @@ public class MemberService implements IMemberService {
 
     @Override
     public List<MPDTO> getByPage(int size, int page) {
-        List<MPDTO> dtos =  databases.getMPs().findAll(PageRequest.of(page,size)).stream().map(MemberService::mapFromMP).toList();
-        return dtos;
+
+        return databases.getMPs().findAll().stream().map(MemberService::mapFromMP).toList();
     }
 
     @Override

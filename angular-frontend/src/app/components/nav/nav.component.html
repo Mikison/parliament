@@ -17,11 +17,12 @@
   <body class="bg-[#1D1D1D]">
     <nav class="flex justify-between items-center px-10 py-4">
       <div class="text-white">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Sejm_RP_logo_and_wordmark.png"
-          alt="Brand Logo"
-          class="h-[100px] w-[100px]"
-        />
+        <a routerLink="/" class="cursor-pointer">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Sejm_RP_logo_and_wordmark.png"
+            alt="Brand Logo"
+            class="h-[100px] w-[100px]"
+        /></a>
       </div>
       <div class="flex gap-12">
         <a
@@ -34,18 +35,10 @@
         <a routerLink="/kluby" routerLinkActive="active" class="nav-link"
           >Kluby</a
         >
-        <a
-          routerLink="/poslowie"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="nav-link"
+        <a routerLink="/poslowie" routerLinkActive="active" class="nav-link"
           >Posłowie</a
         >
-        <a
-          routerLink="/glosowania"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="nav-link"
+        <a routerLink="/glosowania" routerLinkActive="active" class="nav-link"
           >Głosowania</a
         >
         <a

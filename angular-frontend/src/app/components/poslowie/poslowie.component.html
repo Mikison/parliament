@@ -1,1 +1,89 @@
-<p>poslowie works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-[#1D1D1D] text-gray-300">
+    <div class="overflow flex justify-center sm:rounded-lg mt-10">
+      <div class="w-[80%]">
+        <div class="flex justify-between mb-4">
+          <input
+            type="text"
+            placeholder="Search"
+            #filter
+            (keyup)="filterResults(filter.value)"
+            class="bg-gray-300 flex-grow text-black text-2xl px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-600"
+          />
+          <div class="flex text-2xl ml-4">
+            <div class="flex justify-end">
+              <button
+                class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 rounded"
+              >
+                Update
+              </button>
+              <button
+                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded ml-4"
+              >
+                Create
+              </button>
+            </div>
+          </div>
+        </div>
+        <table
+          class="w-full text-2xl text-left text-gray-500 dark:text-gray-400 rounded-2xl overflow-hidden"
+        >
+          <thead
+            class="text-2xl text-gray-700 text-center uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+          >
+            <tr>
+              <th class="px-4 py-2 w-[5%]">ID</th>
+              <th class="px-4 py-2 w-[5%]">Aktywny</th>
+              <th class="px-4 py-2 w-1/12">Foteczka</th>
+              <th class="px-4 py-2 w-1/3">Imię I Nazwisko</th>
+              <th class="px-4 py-2 w-1/12">Klub</th>
+              <th class="px-4 py-2 w-[5%]">Akcja</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            @for (member of members(); track member.apiID) {
+            <tr class="bg-white dark:bg-gray-800 dark:border-gray-700">
+              <td class="py-4 px-6">{{ member.apiID }}</td>
+              <td class="py-4 px-6">{{ member.active }}</td>
+              <td class="flex justify-center items-center px-4 py-2">
+                <img
+                  src="https://api.sejm.gov.pl/sejm/term10/MP/{{
+                    member.apiID
+                  }}/photo"
+                  alt="Error Loading Image..."
+                  loading="lazy"
+                />
+              </td>
+              <td class="py-4 px-6">{{ member.firstLastName }}</td>
+              <td class="py-4 px-6">{{ member.club }}</td>
+              <td class="py-4 px-6">
+                <div class="flex items-center justify-center gap-3">
+                  <a
+                    class="flex items-center justify-center text-white bg-red-500 rounded-lg p-1 cursor-pointer"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a
+                    [routerLink]="['/poslowie', member.apiID]"
+                    class="flex items-center justify-center text-white bg-blue-500 rounded-lg p-1 cursor-pointer"
+                  >
+                    <mat-icon>arrow_right</mat-icon>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

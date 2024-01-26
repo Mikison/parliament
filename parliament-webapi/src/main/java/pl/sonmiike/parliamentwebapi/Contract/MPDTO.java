@@ -25,5 +25,6 @@ public class MPDTO {
     private String secondName;
     private String voivodeship;
     private String waiverDesc;
+    private String vote;
     private List<VotesDTO> votes;
 }

@@ -6,7 +6,7 @@ export interface ParliamentMemberDto {
   birthLocation?: string;
   club?: string;
   districtName?: string;
-  districtNumber?: number;
+  districtNum?: number;
   educationLevel?: string;
   apiID?: number;
   email?: string;
@@ -17,6 +17,6 @@ export interface ParliamentMemberDto {
   numberOfVotes?: number;
   secondName?: string;
   voivodeship?: string;
-  waiverDescription?: string;
-  votesSubmited?: VotesDto[];
+  waiverDesc?: string;
+  votes?: VotesDto[];
 }

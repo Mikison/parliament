@@ -52,6 +52,7 @@ public class ClubService implements IClubService {
     private ClubDTO mapFromClub(ParliamentClub club) {
         List<MPDTO> members = club.getParliamentMembers().stream().map(MemberService::mapFromMP).toList();
         ClubDTO clubDTO = new ClubDTO();
+        clubDTO.setId(club.getId());
         clubDTO.setName(club.getName());
         clubDTO.setNameId(club.getNameId());
         clubDTO.setMembersCount(club.getMembersCount());

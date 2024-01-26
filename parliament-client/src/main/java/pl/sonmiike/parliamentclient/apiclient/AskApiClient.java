@@ -3,15 +3,20 @@ package pl.sonmiike.parliamentclient.apiclient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import pl.sonmiike.parliamentclient.contract.*;
+import pl.sonmiike.parliamentclient.contract.ParliamentClubDTO;
+import pl.sonmiike.parliamentclient.contract.ParliamentMemberDTO;
+import pl.sonmiike.parliamentclient.contract.ParliamentVotingsDTO;
+import pl.sonmiike.parliamentclient.contract.VotesDTO;
 import pl.sonmiike.parliamentclient.contract.side.ParliamentSessionDTO;
 
 import java.net.URI;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -42,7 +47,7 @@ public class AskApiClient implements IAskApiClient {
     public List<ParliamentVotingsDTO> getVotings() {
         List<CompletableFuture<ParliamentVotingsDTO[]>> futures = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i < 11; i++) {
             URI url = buildUri("sejm", "term10", "votings", String.valueOf(i));
             CompletableFuture<ParliamentVotingsDTO[]> future = CompletableFuture.supplyAsync(() ->
                     restTemplate.getForObject(url, ParliamentVotingsDTO[].class));
@@ -61,7 +66,7 @@ public class AskApiClient implements IAskApiClient {
         List<CompletableFuture<VotesDTO[]>> futures = new ArrayList<>();
         getParliamentTerm10Dates();
 
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < 6; i++) {
             for (LocalDate date : parliamentTerm10Dates) {
                 URI url = buildUri("sejm", "term10", "MP", String.valueOf(mpId), "votings", String.valueOf(i), String.valueOf(date));
                 CompletableFuture<VotesDTO[]> future = CompletableFuture.supplyAsync(() ->

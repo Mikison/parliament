@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voting Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-[#1D1D1D] text-gray-300">
+    <div
+      class="max-w-[70%] mx-auto mt-10 p-6 bg-gray-800 shadow rounded-lg text-xl"
+    >
+      <h2 class="text-xl font-semibold mb-4 text-white">Voting Details</h2>
+      <div class="flex flex-col gap-2">
+        <p><strong>ID:</strong> {{ voting().id }}</p>
+        <p><strong>Data:</strong> {{ voting().date }}</p>
+        <p>
+          <strong>Posiedzenie/Dzień:</strong> {{ voting().sitting }}/{{
+            voting().sittingDay
+          }}
+        </p>
+        <p><strong>Tytuł:</strong> {{ voting().title }}</p>
+        <p><strong>Temat:</strong> {{ voting().title }}</p>
+        <p>
+          <strong>Głosy: </strong>
+          <span class="text-green-500">{{ voting().yes }}</span> /
+          <span class="text-red-500">{{ voting().no }}</span> /
+          <span class="text-yellow-500">{{ voting().abstain }}</span>
+        </p>
+        <p><strong>Łącznie:</strong> {{ voting().totalVoted }}</p>
+        <p><strong>Typ głosowania:</strong> {{ voting().kind }}</p>
+      </div>
+    </div>
+
+    <div class="max-w-[95%] mx-auto mt-10 mb-10">
+      <table
+        class="w-full table-auto text-lg bg-gray-800 shadow rounded-lg overflow-hidden text-center"
+      >
+        <thead class="text-white">
+          <tr>
+            <th class="py-3 px-6">Data</th>
+            <th class="py-3 px-6">ID Posła</th>
+            <th class="py-3 px-6">Foteczka</th>
+            <th class="py-3 px-6">Imię I Nazwisko</th>
+            <th class="py-3 px-6">Klub</th>
+            <th class="py-3 px-6">Oddany głos</th>
+            <th class="py-3 px-6">Akcja</th>
+          </tr>
+        </thead>
+        <tbody class="text-center bg-gray-700 text-white">
+          @for (participant of participants(); track participant.date) {
+          <tr>
+            <td class="py-4 px-6">{{ participant.date }}</td>
+            <td class="py-4 px-6">{{ participant.apiId }}</td>
+            <td class="py-4 px-6 w-[10%]">
+              <img
+                src="https://api.sejm.gov.pl/sejm/term10/MP/{{
+                  participant.apiId
+                }}/photo"
+                alt="posel"
+                class="mx-auto w-24 h-32"
+              />
+            </td>
+            <td class="py-4 px-6">{{ participant.firstLastName }}</td>
+            <td class="py-4 px-6">{{ participant.club }}</td>
+            <td
+              [class]="
+                participant.vote === 'YES'
+                  ? 'px-4 py-2 font-bold text-green-600'
+                  : participant.vote === 'NO'
+                  ? 'px-4 py-2 font-bold text-red-600'
+                  : participant.vote === 'VOTE_VALID'
+                  ? 'px-4 py-2 font-bold text-white'
+                  : 'px-4 py-2 font-bold text-yellow-600'
+              "
+            >
+              {{
+                participant.vote === "YES"
+                  ? "ZA"
+                  : participant.vote === "NO"
+                  ? "PRZECIW"
+                  : participant.vote === "VOTE_VALID"
+                  ? "GŁOS WAŻNY"
+                  : "WSTRZYMAŁ SIE"
+              }}
+            </td>
+            <td class="py-4 px-6">
+              <div class="flex items-center justify-center gap-3">
+                <a
+                  [routerLink]="['/poslowie', participant.apiId]"
+                  class="flex items-center justify-center text-white bg-blue-500 rounded-lg p-1 cursor-pointer"
+                >
+                  <mat-icon>arrow_right</mat-icon>
+                </a>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

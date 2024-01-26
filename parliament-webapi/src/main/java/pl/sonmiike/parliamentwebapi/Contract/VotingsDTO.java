@@ -20,6 +20,6 @@ public class VotingsDTO{
     private int totalVoted;
     private String kind;
 
-    private List<MPDTO> participants;
+    private List<VotesDTO> participants;
 
 }

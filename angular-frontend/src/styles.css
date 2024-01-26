@@ -9,8 +9,3 @@
 .nav-link.active {
   @apply border-white rounded-lg border-solid bg-white text-black;
 }
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}

@@ -1,0 +1,107 @@
+<div
+  class="max-w-4xl mx-auto p-6 bg-neutral-800 shadow-lg rounded-3xl flex mt-8 justify-center items-center"
+>
+  <div class="flex">
+    <div class="flex justify-center items-center mr-12">
+      <img
+        src="https://api.sejm.gov.pl/sejm/term10/MP/{{ member().apiID }}/photo"
+        alt="Error Loading Image..."
+        class="w-48"
+      />
+    </div>
+    <div class="flex flex-col px-4 mx-8 mr-auto text-white text-base">
+      <p><strong>ID: </strong>{{ member().apiID }}</p>
+      <p
+        [class]="
+          member().active
+            ? 'font-bold text-green-600'
+            : 'font-bold text-red-600'
+        "
+      >
+        <strong class="text-white">Aktywny: </strong
+        >{{ member().active ? "TAK" : "NIE" }}
+      </p>
+      @if(member().active == false) {
+      <p>
+        <strong>Powód: </strong>
+        {{ member().waiverDesc }}
+      </p>
+      }
+      <p><strong>Imie: </strong> {{ member().firstName }}</p>
+      <p><strong>Nazwisko: </strong> {{ member().lastName }}</p>
+      <p><strong>Second Name: </strong> {{ member().secondName }}</p>
+      <p><strong>Data urodzenia: </strong>{{ member().birthDate }}</p>
+      <p><strong>Miejsce urodzenia: </strong>{{ member().birthLocation }}</p>
+      <p><strong>Klub: </strong>{{ member().club }}</p>
+      <p><strong>Nazwa dystryktu: </strong>{{ member().districtName }}</p>
+      <p><strong>Numer dystryktu: </strong> {{ member().districtNum }}</p>
+      <p><strong>Wykształcenie: </strong> {{ member().educationLevel }}</p>
+      <p><strong>Email: </strong> {{ member().email }}</p>
+      <p><strong>Liczba głosów: </strong> {{ member().numberOfVotes }}</p>
+      <p><strong>Województwo: </strong> {{ member().voivodeship }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="max-w-[95%] mx-auto mt-14">
+  <input
+    type="text"
+    placeholder="Search"
+    #filter
+    (keyup)="filterResults(filter.value)"
+    class="w-full bg-white text-black text-xl px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-600 mb-6"
+  />
+
+  <table class="w-full table-auto text-lg rounded-3xl overflow-hidden">
+    <thead class="text-white text-center bg-gray-800">
+      <tr>
+        <th class="w-[8%] px-4 py-2">Data</th>
+        <th class="w-[8%] px-4 py-2">ID głosowania</th>
+        <th class="w-[62%] px-4 py-2">Tytuł głosowania</th>
+        <th class="w-[8%] px-4 py-2">Oddany głos</th>
+        <th class="w-[8%] px-4 py-2">Akcje</th>
+      </tr>
+    </thead>
+    <tbody class="bg-gray-700 text-white text-center">
+      @for (voting of votes(); track voting.date) {
+      <tr>
+        <td class="px-4 py-2">{{ voting.date }}</td>
+        <td class="px-4 py-2">{{ voting.votingId }}</td>
+        <td class="px-4 py-2">{{ voting.voteTitle }}</td>
+        <td
+          [class]="
+            voting.vote === 'YES'
+              ? 'px-4 py-2 font-bold text-green-600'
+              : voting.vote === 'NO'
+              ? 'px-4 py-2 font-bold text-red-600'
+              : voting.vote === 'VOTE_VALID'
+              ? 'px-4 py-2 font-bold text-white'
+              : 'px-4 py-2 font-bold text-yellow-600'
+          "
+        >
+          {{
+            voting.vote === "YES"
+              ? "ZA"
+              : voting.vote === "NO"
+              ? "PRZECIW"
+              : voting.vote === "VOTE_VALID"
+              ? "GŁOS WAŻNY"
+              : "WSTRZYMAŁ SIE"
+          }}
+        </td>
+
+        <td class="px-4 py-2">
+          <div class="flex items-center justify-center gap-3">
+            <a
+              [routerLink]="['/glosowania', voting.votingId]"
+              class="flex items-center justify-center text-white bg-blue-500 rounded-lg p-1 cursor-pointer"
+            >
+              <mat-icon>arrow_right</mat-icon>
+            </a>
+          </div>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

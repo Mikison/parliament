@@ -1,4 +1,4 @@
-import { ParliamentMemberDto } from './parliamentMember-dto';
+import { VotesDto } from './votes-dto';
 
 export interface VotingDto {
   id?: number;
@@ -10,7 +10,7 @@ export interface VotingDto {
   yes?: number;
   no?: number;
   abstain?: number;
-  totalVotes?: number;
+  totalVoted?: number;
   kind?: string;
-  participants?: ParliamentMemberDto[];
+  participants?: VotesDto[];
 }
