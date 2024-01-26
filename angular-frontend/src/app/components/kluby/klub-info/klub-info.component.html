@@ -20,28 +20,27 @@
         <h2 class="text-2xl font-semibold">Club Details</h2>
         <div class="flex items-center">
           <label for="club-id" class="font-bold mr-2">ID:</label>
-          <span id="club-id" class="rounded p-2">1</span>
+          <span id="club-id" class="rounded p-2">{{ club().id }}</span>
         </div>
         <div class="flex items-center">
           <label for="name-id" class="font-bold mr-2">Skrót:</label>
-          <span id="name-id" class="rounded p-2">PiS</span>
+          <span id="name-id" class="rounded p-2">{{ club().nameId }}</span>
         </div>
         <div class="flex items-center">
           <label for="name" class="font-bold mr-2">Nazwa:</label>
-          <span id="name" class="rounded p-2"
-            >Klub Parlamentarny Koalicja Obywatelska - Platforma Obywatelska,
-            Nowoczesna, Inicjatywa Polska, Zieloni</span
-          >
+          <span id="name" class="rounded p-2">{{ club().name }}</span>
         </div>
         <div class="flex items-center">
           <label for="members-count" class="font-bold mr-2"
             >Liczba Członków:</label
           >
-          <span id="members-count" class="rounded p-2">194</span>
+          <span id="members-count" class="rounded p-2">{{
+            club().membersCount
+          }}</span>
         </div>
         <div class="flex items-center">
           <label for="email" class="font-bold mr-2">Email:</label>
-          <span id="email" class="rounded p-2">pisgorg.pl</span>
+          <span id="email" class="rounded p-2">{{ club().email }}</span>
         </div>
       </div>
     </div>
@@ -67,17 +66,18 @@
           </tr>
         </thead>
         <tbody class="bg-gray-700 text-white">
+          @for(member of members(); track member.apiID) {
           <tr>
-            <td class="px-6 py-4">1</td>
-            <td class="px-6 py-4">true</td>
+            <td class="px-6 py-4">{{ member.apiID }}</td>
+            <td class="px-6 py-4">{{ member.active }}</td>
             <td class="px-6 py-4 flex justify-center items-center">
               <img
-                src="https://api.sejm.gov.pl/sejm/term10/MP/148/photo-mini"
+                [src]="'/assets/images/' + member.apiID + '-mini.jpg'"
                 alt="Error Loading Image..."
               />
             </td>
-            <td class="px-6 py-4">Jarosław Kaczyński</td>
-            <td class="px-6 py-4">123456</td>
+            <td class="px-6 py-4">{{ member.firstLastName }}</td>
+            <td class="px-6 py-4">{{ member.numberOfVotes }}</td>
             <td class="px-6 py-4">
               <div class="flex items-center justify-center gap-3">
                 <a
@@ -86,6 +86,7 @@
                   <mat-icon>delete</mat-icon>
                 </a>
                 <a
+                  [routerLink]="['/poslowie', member.apiID]"
                   class="flex items-center justify-center text-white bg-blue-500 rounded-lg p-1 cursor-pointer"
                 >
                   <mat-icon>arrow_right</mat-icon>
@@ -93,146 +94,9 @@
               </div>
             </td>
           </tr>
+          }
         </tbody>
       </table>
     </div>
   </body>
 </html>
-
-<!-- <style>
-  .custom-table th,
-  .custom-table td {
-    border: 2px solid white;
-  }
-
-  .custom-table tr:first-child th:first-child {
-    border-top-left-radius: 1.5rem;
-  }
-
-  .custom-table tr:first-child th:last-child {
-    border: none;
-  }
-
-  .custom-table tr:last-child td:first-child {
-    border: none;
-  }
-
-  .custom-table tr:last-child td:last-child {
-    border: none;
-  }
-
-  .custom-table img {
-    border-radius: 50%;
-    object-fit: cover;
-  }
-</style>
-<div
-  class="max-w-[75%] mx-auto p-4 bg-white shadow-lg rounded-lg flex justify-around items-center"
->
-  <div class="mr-[5rem]">
-    <img
-      class=""
-      src="https://upload.wikimedia.org/wikinews/pl/thumb/6/6c/PiS_logo.svg/1200px-PiS_logo.svg.png"
-      alt="Club Logo"
-      width="450"
-    />
-  </div>
-
-  <div class="flex flex-col gap-4">
-    <div class="mb-4">
-      <h2 class="text-xl font-semibold">Club Details</h2>
-    </div>
-
-    <div class="mb-4 flex justify-start items-center">
-      <label class="text-gray-700 text-sm font-bold mr-3" for="club-id"
-        >ID:</label
-      >
-      <div id="club-id" class="bg-gray-700 text-white rounded p-2">1</div>
-    </div>
-
-    <div class="mb-4 flex justify-start items-center">
-      <label class="text-gray-700 mr-3 text-sm font-bold" for="name-id"
-        >Skrót:</label
-      >
-      <div id="name-id" class="bg-gray-700 text-white rounded p-2">PiS</div>
-    </div>
-
-    <div class="mb-4 flex justify-start items-center">
-      <label class="text-gray-700 text-sm font-bold mr-4" for="name"
-        >Nazwa:</label
-      >
-      <div id="name" class="bg-gray-700 text-white rounded p-2">
-        Klub Parlamentarny Koalicja Obywatelska - Platforma Obywatelska,
-        Nowoczesna, Inicjatywa Polska, Zieloni
-      </div>
-    </div>
-
-    <div class="mb-4 flex justify-start items-center">
-      <label class="text-gray-700 text-sm mr-4 font-bold" for="members-count"
-        >Liczba Członków:</label
-      >
-      <div id="members-count" class="bg-gray-700 text-white rounded p-2">
-        194
-      </div>
-    </div>
-
-    <div class="mb-4 flex justify-start items-center">
-      <label class="text-gray-700 text-sm mr-4 font-bold" for="email"
-        >Email:</label
-      >
-      <div id="email" class="bg-gray-700 text-white rounded p-2">
-        pisgorg.pl
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="max-w-[85%] mx-auto mt-14">
-  <input
-    type="text"
-    placeholder="Search"
-    class="bg-gray-300 text-black text-2xl px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-600 mb-4 ml-3"
-  />
-  <table class="w-full table-auto overflow-hidden text-lg rounded-3xl">
-    <thead class="text-white text-center bg-neutral-800">
-      <tr>
-        <th class="w-[10%] px-4 py-2">ID Posła</th>
-        <th class="w-[10%] px-4 py-2">Aktywny</th>
-        <th class="w-[10%] px-4 py-2">Foteczka</th>
-        <th class="w-[34%] px-4 py-2">Imie i Nazwisko</th>
-        <th class="w-[10%] px-4 py-2">Liczba głosów</th>
-        <th class="w-[10%] px-4 py-2">Akcje</th>
-      </tr>
-    </thead>
-    <tbody class="text-white text-center bg-neutral-700">
-      <tr>
-        <td class="px-4 py-2">1</td>
-        <td class="px-4 py-2">true</td>
-        <td class="flex justify-center items-center px-4 py-2">
-          <img
-            src="https://api.sejm.gov.pl/sejm/term10/MP/148/photo-mini"
-            height="50px"
-            width="50px"
-            alt="Error Loading Image..."
-          />
-        </td>
-        <td class="px-4 py-2">Jarosław Kaczyński</td>
-        <td class="px-4 py-2">123456</td>
-        <td class="px-4 py-2">
-          <div class="flex items-center justify-center gap-3">
-            <a
-              class="flex items-center justify-center text-white bg-red-500 rounded-lg p-1 cursor-pointer"
-            >
-              <mat-icon>delete</mat-icon>
-            </a>
-            <a
-              class="flex items-center justify-center text-white bg-blue-500 rounded-lg p-1 cursor-pointer"
-            >
-              <mat-icon>arrow_right</mat-icon>
-            </a>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div> -->

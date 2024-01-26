@@ -6,12 +6,18 @@ import pl.sonmiike.parliamentclient.apiclient.IAskApiClient;
 import pl.sonmiike.parliamentclient.contract.ParliamentClubDTO;
 import pl.sonmiike.parliamentclient.contract.ParliamentMemberDTO;
 import pl.sonmiike.parliamentclient.contract.ParliamentVotingsDTO;
-import pl.sonmiike.parliamentdata.model.*;
+import pl.sonmiike.parliamentdata.model.ParliamentMembers;
+import pl.sonmiike.parliamentdata.model.Votes;
+import pl.sonmiike.parliamentdata.model.Voting;
+import pl.sonmiike.parliamentdata.model.VotingOptions;
 import pl.sonmiike.parliamentdata.repositories.IDatabase;
 import pl.sonmiike.parliamentlogging.LogClient;
 import pl.sonmiike.parliamentlogging.contract.LogDTO;
 import pl.sonmiike.parliamentupdater.updater.mappers.IMap;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -101,6 +107,13 @@ public class Updater implements IUpdate {
                 .sorted(Comparator.comparing(ParliamentMemberDTO::getApiId))
                 .map(mapper.members()::mapToEntity)
                 .forEach(member -> {
+                    try {
+
+                        downloadImage("https://api.sejm.gov.pl/sejm/term10/MP/" + member.getApiID() + "/photo", "C:\\Users\\mati1\\Desktop\\parliament\\parliament\\angular-frontend\\src\\app\\images\\" + member.getApiID() + ".jpg");
+                        downloadImage("https://api.sejm.gov.pl/sejm/term10/MP/" + member.getApiID() + "/photo-mini", "C:\\Users\\mati1\\Desktop\\parliament\\parliament\\angular-frontend\\src\\app\\images\\" + member.getApiID() + "-mini.jpg");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     var club = database.getClubs().findByNameId(member.getClub()).orElseThrow();
                     member.setParliamentClub(club);
                     database.getMPs().save(member);
@@ -158,6 +171,25 @@ public class Updater implements IUpdate {
             updateParliamentMembersVotings(member.getApiID());
         }
     }
+
+
+
+    public static void downloadImage(String imageUrl, String savePath) throws Exception {
+        URL url = new URL(imageUrl);
+        try (InputStream in = url.openStream();
+             FileOutputStream fos = new FileOutputStream(savePath)) {
+
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            while ((bytesRead = in.read(buffer)) != -1) {
+                fos.write(buffer, 0, bytesRead);
+            }
+
+            System.out.println("Image downloaded and saved as: " + savePath);
+        }
+    }
+
 
 }
 

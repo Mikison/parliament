@@ -4,7 +4,7 @@
   <div class="flex">
     <div class="flex justify-center items-center mr-12">
       <img
-        src="https://api.sejm.gov.pl/sejm/term10/MP/{{ member().apiID }}/photo"
+        [src]="'/assets/images/' + member().apiID + '.jpg'"
         alt="Error Loading Image..."
         class="w-48"
       />

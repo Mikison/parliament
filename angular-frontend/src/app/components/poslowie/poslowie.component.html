@@ -55,11 +55,8 @@
               <td class="py-4 px-6">{{ member.active }}</td>
               <td class="flex justify-center items-center px-4 py-2">
                 <img
-                  src="https://api.sejm.gov.pl/sejm/term10/MP/{{
-                    member.apiID
-                  }}/photo"
+                  [src]="'/assets/images/' + member.apiID + '.jpg'"
                   alt="Error Loading Image..."
-                  loading="lazy"
                 />
               </td>
               <td class="py-4 px-6">{{ member.firstLastName }}</td>

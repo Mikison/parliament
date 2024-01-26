@@ -54,9 +54,7 @@
             <td class="py-4 px-6">{{ participant.apiId }}</td>
             <td class="py-4 px-6 w-[10%]">
               <img
-                src="https://api.sejm.gov.pl/sejm/term10/MP/{{
-                  participant.apiId
-                }}/photo"
+                [src]="'/assets/images/' + participant.apiId + '.jpg'"
                 alt="posel"
                 class="mx-auto w-24 h-32"
               />
