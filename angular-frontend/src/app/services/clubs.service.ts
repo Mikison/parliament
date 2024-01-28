@@ -14,6 +14,7 @@ export class ClubsService {
   constructor(private http: HttpClient) {}
 
   findAllClubs(): Observable<ClubDto[]> {
+    console.log(this.clubURL);
     return this.http.get<ClubDto[]>(this.clubURL);
   }
 
