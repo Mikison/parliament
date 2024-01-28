@@ -9,6 +9,7 @@
         class="w-48"
       />
     </div>
+
     <div class="flex flex-col px-4 mx-8 mr-auto text-white text-base">
       <p><strong>ID: </strong>{{ member().apiID }}</p>
       <p
@@ -27,6 +28,7 @@
         {{ member().waiverDesc }}
       </p>
       }
+
       <p><strong>Imie: </strong> {{ member().firstName }}</p>
       <p><strong>Nazwisko: </strong> {{ member().lastName }}</p>
       <p><strong>Second Name: </strong> {{ member().secondName }}</p>
@@ -39,6 +41,12 @@
       <p><strong>Email: </strong> {{ member().email }}</p>
       <p><strong>Liczba głosów: </strong> {{ member().numberOfVotes }}</p>
       <p><strong>Województwo: </strong> {{ member().voivodeship }}</p>
+      <button
+        (click)="updateVotes()"
+        class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Update Votings
+      </button>
     </div>
   </div>
 </div>

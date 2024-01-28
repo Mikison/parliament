@@ -21,6 +21,7 @@
           <div class="flex text-2xl ml-4">
             <div class="flex justify-end">
               <button
+                (click)="updateAll()"
                 class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 rounded"
               >
                 Update
@@ -49,7 +50,7 @@
             </tr>
           </thead>
           <tbody class="text-center">
-            @for (member of members(); track member.apiID) {
+            @for (member of members(); track member.apiID ) {
             <tr class="bg-white dark:bg-gray-800 dark:border-gray-700">
               <td class="py-4 px-6">{{ member.apiID }}</td>
               <td class="py-4 px-6">{{ member.active }}</td>
@@ -63,11 +64,14 @@
               <td class="py-4 px-6">{{ member.club }}</td>
               <td class="py-4 px-6">
                 <div class="flex items-center justify-center gap-3">
+                  @if (member.apiID) {
                   <a
+                    (click)="deleteMember(member.apiID)"
                     class="flex items-center justify-center text-white bg-red-500 rounded-lg p-1 cursor-pointer"
                   >
                     <mat-icon>delete</mat-icon>
                   </a>
+                  }
                   <a
                     [routerLink]="['/poslowie', member.apiID]"
                     class="flex items-center justify-center text-white bg-blue-500 rounded-lg p-1 cursor-pointer"

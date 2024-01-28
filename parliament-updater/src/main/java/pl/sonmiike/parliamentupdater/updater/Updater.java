@@ -15,6 +15,7 @@ import pl.sonmiike.parliamentlogging.LogClient;
 import pl.sonmiike.parliamentlogging.contract.LogDTO;
 import pl.sonmiike.parliamentupdater.updater.mappers.IMap;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -108,9 +109,13 @@ public class Updater implements IUpdate {
                 .map(mapper.members()::mapToEntity)
                 .forEach(member -> {
                     try {
+                        File file = new File(System.getProperty("user.dir") + "/angular-frontend/src/assets/images/" + member.getApiID() + ".jpg");
+                        File file2 = new File(System.getProperty("user.dir") + "/angular-frontend/src/assets/images/" + member.getApiID() + "-mini.jpg");
+                        if (!file.exists() && !file2.exists()) {
 
-                        downloadImage("https://api.sejm.gov.pl/sejm/term10/MP/" + member.getApiID() + "/photo", "C:\\Users\\mati1\\Desktop\\parliament\\parliament\\angular-frontend\\src\\app\\images\\" + member.getApiID() + ".jpg");
-                        downloadImage("https://api.sejm.gov.pl/sejm/term10/MP/" + member.getApiID() + "/photo-mini", "C:\\Users\\mati1\\Desktop\\parliament\\parliament\\angular-frontend\\src\\app\\images\\" + member.getApiID() + "-mini.jpg");
+                            downloadImage("https://api.sejm.gov.pl/sejm/term10/MP/" + member.getApiID() + "/photo", member.getApiID() + ".jpg");
+                            downloadImage("https://api.sejm.gov.pl/sejm/term10/MP/" + member.getApiID() + "/photo-mini", member.getApiID() + "-mini.jpg");
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -174,8 +179,10 @@ public class Updater implements IUpdate {
 
 
 
-    public static void downloadImage(String imageUrl, String savePath) throws Exception {
+    public static void downloadImage(String imageUrl, String imageName) throws Exception {
         URL url = new URL(imageUrl);
+        String savePath = System.getProperty("user.dir") + "/angular-frontend/src/assets/images/" + imageName;
+
         try (InputStream in = url.openStream();
              FileOutputStream fos = new FileOutputStream(savePath)) {
 

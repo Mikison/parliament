@@ -1,6 +1,8 @@
 package pl.sonmiike.parliamentwebapi.Services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import pl.sonmiike.parliamentdata.model.ParliamentClub;
 import pl.sonmiike.parliamentdata.repositories.IDatabase;
@@ -17,6 +19,7 @@ public class ClubService implements IClubService {
     private final IDatabase database;
 
     @Override
+    @Cacheable("clubs")
     public List<ClubDTO> getAllClubs() {
         return this.database.getClubs().findAll().stream().map(this::mapFromClub).toList();
     }
@@ -34,6 +37,7 @@ public class ClubService implements IClubService {
     }
 
     @Override
+    @CacheEvict(value = "clubs", allEntries = true)
     public ClubDTO delete(long id) {
         var club = database.getClubs().findById(id).orElse(null);
         if(club==null) return null;

@@ -40,4 +40,24 @@ export class GlosowaniaComponent implements OnInit {
       console.log(votings);
     });
   }
+
+  filterResults(text: string): void {
+    const results: VotingDto[] = [];
+    for (const member of this.votings()) {
+      if (
+        (member.title &&
+          member.title.toLowerCase().indexOf(text.toLowerCase()) !== -1) ||
+        (member.date &&
+          member.date.toLowerCase().indexOf(text.toLowerCase()) !== -1) ||
+        (member.id &&
+          member.id.toString().toLowerCase().indexOf(text.toLowerCase()) !== -1)
+      ) {
+        results.push(member);
+      }
+    }
+    this.votings.set(results);
+    if (results.length === 0 || !text) {
+      this.getAllVotins();
+    }
+  }
 }

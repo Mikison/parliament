@@ -10,7 +10,8 @@ import { ButtonComponent } from '../kluby/button/button.component';
 import { MemberService } from '../../services/member.service';
 import { ParliamentMemberDto } from '../../models/parliamentMember-dto';
 import { RouterModule } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { UpdaterService } from '../../services/updater.service';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-poslowie',
@@ -22,7 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class PoslowieComponent implements OnInit {
   memberService = inject(MemberService);
   members: WritableSignal<ParliamentMemberDto[]> = signal([]);
-  dialog = inject(MatDialog);
+  updater = inject(UpdaterService);
 
   ngOnInit(): void {
     this.findAllMembers();
@@ -37,7 +38,22 @@ export class PoslowieComponent implements OnInit {
         return 0;
       });
       this.members.set(data);
+    });
+  }
+  updateAll(): void {
+    this.updater.update().subscribe((data) => {
+      console.log('UPDATE ALL' + data);
+      this.findAllMembers();
+    });
+    setTimeout(() => {
+      this.findAllMembers();
+    }, 6000);
+  }
+
+  deleteMember(apiId: number): void {
+    this.memberService.deleteMemberById(apiId).subscribe((data) => {
       console.log(data);
+      this.findAllMembers();
     });
   }
 

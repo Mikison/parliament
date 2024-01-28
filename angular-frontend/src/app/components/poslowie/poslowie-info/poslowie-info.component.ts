@@ -1,3 +1,4 @@
+import { UpdaterService } from './../../../services/updater.service';
 import { ParliamentMemberDto } from './../../../models/parliamentMember-dto';
 import {
   Component,
@@ -22,6 +23,7 @@ import { map, Observable } from 'rxjs';
 export class PoslowieInfoComponent implements OnInit {
   membersService = inject(MemberService);
   router = inject(Router);
+  updater = inject(UpdaterService);
 
   member: WritableSignal<ParliamentMemberDto> = signal({});
   votes: WritableSignal<VotesDto[]> = signal([]);
@@ -30,8 +32,20 @@ export class PoslowieInfoComponent implements OnInit {
     this.getMember();
   }
 
+  updateVotes(): void {
+    const memberId = Number(this.router.url.split('/')[2]);
+
+    this.updater.updateMPVotesById(memberId).subscribe(() => {});
+    setTimeout(() => {
+      console.log('Updating...');
+      this.getMember();
+      console.log('Updated!');
+    }, 10000);
+  }
+
   private getMember(): void {
     const memberId = Number(this.router.url.split('/')[2]);
+
     this.membersService.findMemberById(memberId).subscribe((data) => {
       if (data.votes) {
         this.getVotes().subscribe((votes) => {

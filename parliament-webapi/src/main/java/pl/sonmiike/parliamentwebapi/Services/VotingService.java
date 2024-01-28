@@ -1,6 +1,8 @@
 package pl.sonmiike.parliamentwebapi.Services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import pl.sonmiike.parliamentdata.model.Voting;
 import pl.sonmiike.parliamentdata.repositories.IDatabase;
@@ -15,6 +17,7 @@ public class VotingService implements IVotingService {
     private final IDatabase database;
     private final VotesService votes;
     @Override
+    @Cacheable("votings")
     public List<VotingsDTO> getByPage(int size, int page) {
         return database.getVotings().findAll().stream().map(this::mapFromVoting).toList();
     }
@@ -39,6 +42,7 @@ public class VotingService implements IVotingService {
     }
 
     @Override
+    @CacheEvict(value = "votings", allEntries = true)
     public VotingsDTO delete(long id) {
         var voting = database.getVotings().findById(id).orElse(null);
         if(voting==null) return null;
